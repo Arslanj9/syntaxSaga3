@@ -107,10 +107,6 @@ export default function Level3() {
 
   const checkKeyCollection = (x: number, z: number): boolean => {
     const distance = Math.sqrt(Math.pow(x - KEY_POSITION.x, 2) + Math.pow(z - KEY_POSITION.z, 2))
-    // Debug logging to help identify the issue
-    if (Math.abs(x - KEY_POSITION.x) < 5 && Math.abs(z - KEY_POSITION.z) < 5) {
-      console.log(`Seahorse: (${x.toFixed(2)}, ${z.toFixed(2)}), Key: (${KEY_POSITION.x}, ${KEY_POSITION.z}), Distance: ${distance.toFixed(2)}`)
-    }
     return distance < COLLECTION_DISTANCE
   }
 
@@ -217,17 +213,13 @@ export default function Level3() {
       } else if (cmd.type !== "wait") { nextStage = 0; nextForwards = 0 }
     }
 
-    // 🔑 Check if key is collected (check after every movement)
-    if (!keyCollected) {
-      const isNearKey = checkKeyCollection(newPos.x, newPos.z)
-      if (isNearKey) {
-        console.log(`✅ KEY COLLECTED! Seahorse at (${newPos.x.toFixed(2)}, ${newPos.z.toFixed(2)})`)
-        setKeyCollected(true)
-        setHasKey(true)
-        setDoorOpen(true) // ✅ Open the door when key is collected
-        setShowKeyToast(true)
-        setTimeout(() => setShowKeyToast(false), 1500)
-      }
+    // 🔑 Check if key is collected
+    if (!keyCollected && checkKeyCollection(newPos.x, newPos.z)) {
+      setKeyCollected(true)
+      setHasKey(true)
+      setDoorOpen(true) // ✅ Open the door when key is collected
+      setShowKeyToast(true)
+      setTimeout(() => setShowKeyToast(false), 1500)
     }
 
     // 🏁 Check for level completion - need to reach goal position after collecting key
