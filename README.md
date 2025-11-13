@@ -15,6 +15,8 @@ Syntax Saga is a playful, visual game that teaches core programming concepts. Ki
 - Next.js (App Router)
 - React, TypeScript
 - React Three Fiber + drei for 3D
+- Blender for 3d Models
+- Firebase Authentication
 - Shadcn/ui components for UI controls
 
 ## Project Structure
